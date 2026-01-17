@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+
+@theme {
+	/* 1. Mapeo de Fuentes */
+	--font-sans: "Inter", sans-serif;
+	--font-display: "Inter", sans-serif;
+
+	/* 2. Mapeo de Radio de Borde */
+	--radius: 0.75rem;
+
+	/* 3. Mapeo de Colores (Conectando variables HSL a utilidades de Tailwind) */
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
+
+	--color-card: hsl(var(--card));
+	--color-card-foreground: hsl(var(--card-foreground));
+
+	--color-popover: hsl(var(--popover));
+	--color-popover-foreground: hsl(var(--popover-foreground));
+
+	--color-primary: hsl(var(--primary));
+	--color-primary-foreground: hsl(var(--primary-foreground));
+
+	--color-secondary: hsl(var(--secondary));
+	--color-secondary-foreground: hsl(var(--secondary-foreground));
+
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
+
+	--color-accent: hsl(var(--accent));
+	--color-accent-foreground: hsl(var(--accent-foreground));
+
+	--color-destructive: hsl(var(--destructive));
+	--color-destructive-foreground: hsl(var(--destructive-foreground));
+
+	--color-border: hsl(var(--border));
+	--color-input: hsl(var(--input));
+	--color-ring: hsl(var(--ring));
+
+	/* Colores de formas personalizadas */
+	--color-shape-orange: hsl(var(--shape-orange));
+	--color-shape-purple: hsl(var(--shape-purple));
+	--color-shape-pink: hsl(var(--shape-pink));
+	--color-shape-red: hsl(var(--shape-red));
+
+	/* 4. Gradientes (En v4 se usan como --image-*) */
+	--image-rainbow: var(--gradient-rainbow);
+	--image-button: var(--gradient-button);
+}
+
+/* Valores de las variables CSS.
+   En v4 mantenemos los valores aquí para soportar el cambio de modo oscuro/claro 
+   si usas la técnica de Shadcn.
+*/
+:root {
+	--background: 0 0% 3%;
+	--foreground: 0 0% 98%;
+
+	--card: 0 0% 6%;
+	--card-foreground: 0 0% 98%;
+
+	--popover: 0 0% 6%;
+	--popover-foreground: 0 0% 98%;
+
+	--primary: 0 0% 98%;
+	--primary-foreground: 0 0% 3%;
+
+	--secondary: 0 0% 12%;
+	--secondary-foreground: 0 0% 98%;
+
+	--muted: 0 0% 15%;
+	--muted-foreground: 0 0% 60%;
+
+	--accent: 280 100% 65%;
+	--accent-foreground: 0 0% 98%;
+
+	--destructive: 0 84.2% 60.2%;
+	--destructive-foreground: 0 0% 98%;
+
+	--border: 0 0% 20%;
+	--input: 0 0% 15%;
+	--ring: 280 100% 65%;
+
+	/* Variables de Shape Colors (Valores crudos) */
+	--shape-orange: 25 100% 60%;
+	--shape-purple: 280 100% 65%;
+	--shape-pink: 340 100% 60%;
+	--shape-red: 0 80% 55%;
+
+	/* Custom gradients definitions */
+	--gradient-rainbow: linear-gradient(
+		90deg,
+		hsl(340, 100%, 60%) 0%,
+		hsl(280, 100%, 65%) 25%,
+		hsl(200, 100%, 60%) 50%,
+		hsl(160, 100%, 50%) 75%,
+		hsl(40, 100%, 60%) 100%
+	);
+
+	--gradient-button: linear-gradient(
+		135deg,
+		hsl(180, 100%, 50%) 0%,
+		hsl(280, 100%, 65%) 50%,
+		hsl(340, 100%, 60%) 100%
+	);
+}
+
+/* Base Styles */
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans antialiased;
+	}
+}
+
+/* Component Styles */
+@layer components {
+	/* Text outline style */
+	.text-outline {
+		color: transparent;
+		-webkit-text-stroke: 1px var(--color-foreground);
+		text-stroke: 1px var(--color-foreground);
+	}
+
+	.text-outline-thin {
+		color: transparent;
+		/* Usando color-mix para opacidad en CSS nativo si es necesario, o la variable directa */
+		-webkit-text-stroke: 0.5px hsl(var(--foreground) / 0.6);
+		text-stroke: 0.5px hsl(var(--foreground) / 0.6);
+	}
+
+	/* Gradient text - Ahora usa la utilidad definida en theme */
+	.gradient-text {
+		background: var(--image-rainbow);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	/* Gradient border button */
+	.gradient-border {
+		position: relative;
+		background: transparent;
+		z-index: 1;
+	}
+
+	.gradient-border::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 2px;
+		background: var(--image-button);
+		-webkit-mask: linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		z-index: -1;
+	}
+
+	/* Abstract shapes */
+	.abstract-shape {
+		filter: blur(60px);
+		opacity: 0.8;
+	}
+
+	/* Scrolling text animation */
+	.scroll-text {
+		white-space: nowrap;
+	}
+}
+
+/* Utilities */
+@layer utilities {
+	/* En v4, al definir --font-display en el @theme, 
+     automáticamente obtienes la clase .font-display.
+     
+     Aquí añadimos variantes específicas si necesitas pesos concretos.
+  */
+	.font-display {
+		font-weight: 300;
+		letter-spacing: -0.03em;
+	}
+
+	.font-display-bold {
+		font-family: var(--font-display);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+	}
+}
