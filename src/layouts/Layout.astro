@@ -16,6 +16,26 @@ import "../styles/global.css";
 	</body>
 </html>
 
+<script>
+	const theme = (() => {
+		if (
+			typeof localStorage !== "undefined" &&
+			localStorage.getItem("theme")
+		) {
+			return localStorage.getItem("theme");
+		}
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	})();
+
+	if (theme === "light") {
+		document.documentElement.classList.add("light");
+	} else {
+		document.documentElement.classList.remove("light");
+	}
+</script>
+
 <style>
 	html,
 	body {

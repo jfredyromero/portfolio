@@ -1,81 +1,53 @@
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-
 export const AbstractShapes = () => {
-	const shapesRef = useRef<HTMLDivElement>(null);
-
-	useLayoutEffect(() => {
-		const ctx = gsap.context(() => {
-			const shapes = shapesRef.current?.querySelectorAll(
-				".shape"
-			) as gsap.TweenTarget;
-
-			// Set initial state
-			gsap.set(shapes, { opacity: 0, scale: 0.3 });
-
-			// Animate shapes entrance
-			gsap.to(shapes, {
-				opacity: 1,
-				scale: 1,
-				duration: 1.2,
-				stagger: 0.15,
-				ease: "power3.out",
-				delay: 0.3,
-			});
-
-			// Floating animation for shapes
-			(shapes as NodeList).forEach((shape, index) => {
-				gsap.to(shape, {
-					y: `${(index % 2 === 0 ? -1 : 1) * 25}`,
-					x: `${(index % 2 === 0 ? 1 : -1) * 15}`,
-					rotation: index % 2 === 0 ? 8 : -8,
-					duration: 5 + index * 0.5,
-					repeat: -1,
-					yoyo: true,
-					ease: "sine.inOut",
-					delay: 1.5,
-				});
-			});
-		}, shapesRef);
-
-		return () => ctx.revert();
-	}, []);
-
 	return (
-		<div
-			ref={shapesRef}
-			className="absolute right-0 top-1/2 -translate-y-1/2 w-[55%] h-full pointer-events-none"
-		>
-			{/* Orange/Peach shape */}
+		<div className="absolute right-0 top-1/2 -translate-y-1/2 w-[60%] h-full pointer-events-none animate-circle-float">
+			{/* 1. Orange/Peach  */}
 			<div
-				className="shape absolute top-[15%] right-[25%] w-36 h-44 md:w-52 md:h-60"
+				className="absolute top-[10%] right-[20%] w-36 h-44 md:w-52 md:h-60 animate-float-rotate-1 opacity-70 blur-2xl"
 				style={{
 					background:
-						"linear-gradient(145deg, hsl(30, 100%, 65%) 0%, hsl(15, 95%, 55%) 100%)",
+						"linear-gradient(145deg, var(--color-shape-orange) 0%, #f97316 100%)",
 					borderRadius: "45% 55% 60% 40% / 45% 50% 55% 50%",
-					filter: "blur(40px)",
 				}}
 			/>
 
-			{/* Purple/Magenta shape */}
+			{/* 2. Purple/Magenta */}
 			<div
-				className="shape absolute top-[25%] right-[40%] w-44 h-52 md:w-64 md:h-72"
+				className="absolute top-[30%] right-[45%] w-44 h-52 md:w-64 md:h-72 animate-float-rotate-2 opacity-60 blur-[45px]"
 				style={{
 					background:
-						"linear-gradient(135deg, hsl(280, 85%, 60%) 0%, hsl(300, 75%, 50%) 100%)",
+						"linear-gradient(135deg, var(--color-shape-purple) 0%, #a855f7 100%)",
 					borderRadius: "55% 45% 35% 65% / 55% 35% 65% 45%",
-					filter: "blur(45px)",
 				}}
 			/>
 
-			{/* Red/Pink shape */}
+			{/* 3. Cyan/Blue  */}
 			<div
-				className="shape absolute bottom-[25%] right-[20%] w-48 h-44 md:w-72 md:h-64"
+				className="absolute top-[50%] right-[10%] w-40 h-40 md:w-56 md:h-56 animate-float-rotate-4 opacity-50 blur-[55px]"
 				style={{
 					background:
-						"linear-gradient(160deg, hsl(355, 90%, 55%) 0%, hsl(340, 85%, 50%) 100%)",
+						"linear-gradient(120deg, #06b6d4 0%, #3b82f6 100%)",
+					borderRadius: "60% 40% 70% 30% / 50% 60% 40% 50%",
+				}}
+			/>
+
+			{/* 4. Red/Pink  */}
+			<div
+				className="absolute bottom-[15%] right-[30%] w-48 h-44 md:w-72 md:h-64 animate-float-rotate-3 opacity-60 blur-[50px]"
+				style={{
+					background:
+						"linear-gradient(160deg, var(--color-shape-red) 0%, var(--color-shape-pink) 100%)",
 					borderRadius: "35% 65% 60% 40% / 35% 40% 60% 65%",
-					filter: "blur(50px)",
+				}}
+			/>
+
+			{/* 5. Lime/Green */}
+			<div
+				className="absolute bottom-[5%] right-[55%] w-32 h-32 md:w-48 md:h-48 animate-float-rotate-5 opacity-40 blur-[60px]"
+				style={{
+					background:
+						"linear-gradient(135deg, #84cc16 0%, #22c55e 100%)",
+					borderRadius: "50% 50% 30% 70% / 60% 40% 60% 40%",
 				}}
 			/>
 		</div>

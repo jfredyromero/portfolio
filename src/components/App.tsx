@@ -1,18 +1,20 @@
 import { useResumeData } from "@/hooks/useResumeData";
+import { useTheme } from "@/hooks/useTheme";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import ScrollingText from "@/components/ScrollingText";
 import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Education from "@/components/Education";
 import Awards from "@/components/Awards";
 import Languages from "@/components/Languages";
 import References from "@/components/References";
 import Footer from "@/components/Footer";
-import Projects from "./Projects";
 
-const Index = () => {
+const App = () => {
 	const { data, loading, error } = useResumeData();
+	const { theme, toggleTheme } = useTheme();
 
 	if (loading) {
 		return (
@@ -40,62 +42,56 @@ const Index = () => {
 
 	return (
 		<main className="bg-background">
-			<Navigation name={data.basics.name} />
-
-			<Hero
-				name={data.basics.name}
-				headline={data.basics.headline}
-				email={data.basics.email}
-				location={data.basics.location}
-				pictureUrl={data.basics.picture.url}
+			<Navigation
+				name={data.data.basics.name}
+				theme={theme}
+				toggleTheme={toggleTheme}
 			/>
-
-			{data.sections.summary.visible && (
-				<ScrollingText text={data.sections.summary.content} />
+			<Hero
+				name={data.data.basics.name}
+				headline={data.data.basics.headline}
+				email={data.data.basics.email}
+				location={data.data.basics.location}
+				pictureUrl={data.data.basics.picture.url}
+			/>
+			{data.data.sections.summary.visible && (
+				<ScrollingText text={data.data.sections.summary.content} />
 			)}
-
-			{data.sections.experience.visible &&
-				data.sections.experience.items.length > 0 && (
-					<Experience items={data.sections.experience.items} />
+			{data.data.sections.experience.visible &&
+				data.data.sections.experience.items.length > 0 && (
+					<Experience items={data.data.sections.experience.items} />
 				)}
-
-			{data.sections.projects.visible &&
-				data.sections.projects.items.length > 0 && (
-					<Projects items={data.sections.projects.items} />
+			{data.data.sections.projects.visible &&
+				data.data.sections.projects.items.length > 0 && (
+					<Projects items={data.data.sections.projects.items} />
 				)}
-
-			{data.sections.skills.visible &&
-				data.sections.skills.items.length > 0 && (
-					<Skills items={data.sections.skills.items} />
+			{data.data.sections.skills.visible &&
+				data.data.sections.skills.items.length > 0 && (
+					<Skills items={data.data.sections.skills.items} />
 				)}
-
-			{data.sections.education.visible &&
-				data.sections.education.items.length > 0 && (
-					<Education items={data.sections.education.items} />
+			{data.data.sections.education.visible &&
+				data.data.sections.education.items.length > 0 && (
+					<Education items={data.data.sections.education.items} />
 				)}
-
-			{data.sections.awards.visible &&
-				data.sections.awards.items.length > 0 && (
-					<Awards items={data.sections.awards.items} />
+			{data.data.sections.awards.visible &&
+				data.data.sections.awards.items.length > 0 && (
+					<Awards items={data.data.sections.awards.items} />
 				)}
-
-			{data.sections.languages.visible &&
-				data.sections.languages.items.length > 0 && (
-					<Languages items={data.sections.languages.items} />
+			{data.data.sections.languages.visible &&
+				data.data.sections.languages.items.length > 0 && (
+					<Languages items={data.data.sections.languages.items} />
 				)}
-
-			{data.sections.references.visible &&
-				data.sections.references.items.length > 0 && (
-					<References items={data.sections.references.items} />
+			{data.data.sections.references.visible &&
+				data.data.sections.references.items.length > 0 && (
+					<References items={data.data.sections.references.items} />
 				)}
-
 			<Footer
-				name={data.basics.name}
-				email={data.basics.email}
-				customFields={data.basics.customFields}
+				name={data.data.basics.name}
+				email={data.data.basics.email}
+				customFields={data.data.basics.customFields}
 			/>
 		</main>
 	);
 };
 
-export default Index;
+export default App;
