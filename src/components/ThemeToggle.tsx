@@ -1,15 +1,16 @@
 import { Moon, Sun } from "lucide-react";
+import type { MouseEventHandler } from "react";
 
 interface ThemeToggleProps {
 	theme: "dark" | "light";
-	toggleTheme: () => void;
+	toggleTheme: MouseEventHandler<HTMLButtonElement>;
 }
 
 const ThemeToggle = ({ theme, toggleTheme }: ThemeToggleProps) => {
 	return (
 		<button
 			onClick={toggleTheme}
-			className="p-2 rounded-full bg-secondary/50 hover:bg-secondary transition-colors duration-300 group"
+			className="p-2 rounded-full bg-secondary/50 hover:bg-secondary transition-colors duration-300 group cursor-pointer"
 			aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
 		>
 			{theme === "dark" ? (
