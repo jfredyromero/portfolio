@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, type MouseEventHandler } from "react";
 import { Github } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavigationProps {
 	name: string;
 	theme: "dark" | "light";
-	toggleTheme: () => void;
+	toggleTheme: MouseEventHandler<HTMLButtonElement>;
 }
 
 const navItems = [
@@ -50,7 +50,7 @@ const Navigation = ({ name, theme, toggleTheme }: NavigationProps) => {
 						<button
 							key={item.id}
 							onClick={() => scrollToSection(item.id)}
-							className="text-muted-foreground text-sm uppercase tracking-wider hover:text-foreground transition-colors duration-300"
+							className="text-muted-foreground text-sm uppercase tracking-wider hover:text-foreground transition-colors duration-300 cursor-pointer"
 						>
 							{item.label}
 						</button>
@@ -123,7 +123,7 @@ const Navigation = ({ name, theme, toggleTheme }: NavigationProps) => {
 						<button
 							key={item.id}
 							onClick={() => scrollToSection(item.id)}
-							className="text-foreground text-lg uppercase tracking-wider py-2 text-left hover:text-accent transition-colors duration-300"
+							className="text-foreground text-lg uppercase tracking-wider py-2 text-left hover:text-accent transition-colors duration-300 cursor-pointer"
 						>
 							{item.label}
 						</button>
