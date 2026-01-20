@@ -6,9 +6,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface SkillItem {
 	id: string;
-	visible: boolean;
+	hidden: boolean;
 	name: string;
-	description: string;
+	proficiency: string;
 	level: number;
 	keywords: string[];
 }
@@ -62,7 +62,7 @@ const Skills = ({ items }: SkillsProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -100,6 +100,11 @@ const Skills = ({ items }: SkillsProps) => {
 								))}
 							</div>
 						</div>
+						{skill.proficiency && (
+							<p className="text-sm text-muted-foreground mb-3">
+								{skill.proficiency}
+							</p>
+						)}
 						<div className="flex flex-wrap gap-2">
 							{skill.keywords.map((keyword, index) => (
 								<span

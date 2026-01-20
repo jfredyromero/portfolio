@@ -7,10 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface ReferenceItem {
 	id: string;
-	visible: boolean;
+	hidden: boolean;
 	name: string;
 	description: string;
-	summary: string;
 }
 
 interface ReferencesProps {
@@ -61,13 +60,7 @@ const References = ({ items }: ReferencesProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
-
-	// Extract phone from HTML summary
-	const extractPhone = (html: string) => {
-		const match = html.match(/<p>([^<]+)<\/p>/);
-		return match ? match[1] : "";
-	};
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -93,14 +86,14 @@ const References = ({ items }: ReferencesProps) => {
 						<h3 className="text-xl font-display-bold text-foreground group-hover:gradient-text transition-all duration-300">
 							{ref.name}
 						</h3>
-						<p className="text-muted-foreground mt-1">
-							{ref.description}
-						</p>
 
-						{ref.summary && (
-							<p className="text-accent text-sm mt-4 font-mono">
-								{extractPhone(ref.summary)}
-							</p>
+						{ref.description && (
+							<p
+								className="text-muted-foreground mt-4 text-sm"
+								dangerouslySetInnerHTML={{
+									__html: ref.description,
+								}}
+							/>
 						)}
 					</div>
 				))}

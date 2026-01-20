@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface LanguageItem {
 	id: string;
-	visible: boolean;
-	name: string;
-	description: string;
+	hidden: boolean;
+	language: string;
+	fluency: string;
 	level: number;
 }
 
@@ -80,7 +80,7 @@ const Languages = ({ items }: LanguagesProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -104,10 +104,10 @@ const Languages = ({ items }: LanguagesProps) => {
 							</div>
 							<div>
 								<h3 className="text-lg font-display-bold text-foreground">
-									{lang.name}
+									{lang.language}
 								</h3>
 								<span className="text-sm text-muted-foreground">
-									{lang.description}
+									{lang.fluency}
 								</span>
 							</div>
 						</div>

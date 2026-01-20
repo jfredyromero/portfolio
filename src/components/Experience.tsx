@@ -6,12 +6,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface ExperienceItem {
 	id: string;
-	visible: boolean;
+	hidden: boolean;
 	company: string;
 	position: string;
 	location: string;
-	date: string;
-	summary: string;
+	period: string;
+	description: string;
 }
 
 interface ExperienceProps {
@@ -62,7 +62,7 @@ const Experience = ({ items }: ExperienceProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -94,7 +94,7 @@ const Experience = ({ items }: ExperienceProps) => {
 
 							<div className="bg-card/50 p-6 rounded-lg border border-border hover:border-accent/50 transition-colors duration-300">
 								<span className="text-accent text-sm font-mono">
-									{item.date}
+									{item.period}
 								</span>
 								<h3 className="text-xl md:text-2xl font-display-bold text-foreground mt-2">
 									{item.position}
@@ -106,9 +106,9 @@ const Experience = ({ items }: ExperienceProps) => {
 									{item.location}
 								</p>
 								<div
-									className="text-muted-foreground text-sm mt-4 prose prose-invert prose-sm max-w-none"
+									className="text-muted-foreground text-sm mt-4 prose prose-sm max-w-none dark:prose-invert"
 									dangerouslySetInnerHTML={{
-										__html: item.summary,
+										__html: item.description,
 									}}
 								/>
 							</div>

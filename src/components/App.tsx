@@ -47,48 +47,59 @@ const App = () => {
 				theme={theme}
 				toggleTheme={toggleTheme}
 			/>
+
 			<Hero
 				name={data.data.basics.name}
 				headline={data.data.basics.headline}
 				email={data.data.basics.email}
 				location={data.data.basics.location}
-				pictureUrl={data.data.basics.picture.url}
+				pictureUrl={data.data.picture.url}
+				pictureHidden={data.data.picture.hidden}
 			/>
-			{data.data.sections.summary.visible && (
-				<ScrollingText text={data.data.sections.summary.content} />
+
+			{!data.data.summary.hidden && data.data.summary.content && (
+				<ScrollingText text={data.data.summary.content} />
 			)}
-			{data.data.sections.experience.visible &&
+
+			{!data.data.sections.experience.hidden &&
 				data.data.sections.experience.items.length > 0 && (
 					<Experience items={data.data.sections.experience.items} />
 				)}
-			{data.data.sections.projects.visible &&
+
+			{!data.data.sections.projects.hidden &&
 				data.data.sections.projects.items.length > 0 && (
 					<Projects items={data.data.sections.projects.items} />
 				)}
-			{data.data.sections.skills.visible &&
+
+			{!data.data.sections.skills.hidden &&
 				data.data.sections.skills.items.length > 0 && (
 					<Skills items={data.data.sections.skills.items} />
 				)}
-			{data.data.sections.education.visible &&
+
+			{!data.data.sections.education.hidden &&
 				data.data.sections.education.items.length > 0 && (
 					<Education items={data.data.sections.education.items} />
 				)}
-			{data.data.sections.awards.visible &&
+
+			{!data.data.sections.awards.hidden &&
 				data.data.sections.awards.items.length > 0 && (
 					<Awards items={data.data.sections.awards.items} />
 				)}
-			{data.data.sections.languages.visible &&
+
+			{!data.data.sections.languages.hidden &&
 				data.data.sections.languages.items.length > 0 && (
 					<Languages items={data.data.sections.languages.items} />
 				)}
-			{data.data.sections.references.visible &&
+
+			{!data.data.sections.references.hidden &&
 				data.data.sections.references.items.length > 0 && (
 					<References items={data.data.sections.references.items} />
 				)}
+
 			<Footer
 				name={data.data.basics.name}
 				email={data.data.basics.email}
-				customFields={data.data.basics.customFields}
+				customFields={data.data.sections.profiles.items}
 			/>
 		</main>
 	);

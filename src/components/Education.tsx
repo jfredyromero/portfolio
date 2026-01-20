@@ -6,14 +6,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface EducationItem {
 	id: string;
-	visible: boolean;
-	institution: string;
-	studyType: string;
+	hidden: boolean;
+	school: string;
+	degree: string;
 	area: string;
-	score: string;
-	date: string;
-	summary: string;
-	url: { label: string; href: string };
+	grade: string;
+	location: string;
+	period: string;
+	website: { url: string; label: string };
+	description: string;
 }
 
 interface EducationProps {
@@ -64,7 +65,7 @@ const Education = ({ items }: EducationProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -86,22 +87,27 @@ const Education = ({ items }: EducationProps) => {
 						className="edu-item group bg-card/50 p-6 rounded-lg border border-border hover:border-accent/50 transition-all duration-300"
 					>
 						<span className="text-accent text-sm font-mono">
-							{edu.date}
+							{edu.period}
 						</span>
 						<h3 className="text-xl font-display-bold text-foreground mt-2 group-hover:gradient-text transition-all duration-300">
-							{edu.area}
+							{edu.area || edu.degree}
 						</h3>
 						<p className="text-muted-foreground mt-2">
-							{edu.institution}
+							{edu.school}
 						</p>
-						{edu.url.href && (
+						{edu.location && (
+							<p className="text-muted-foreground text-sm">
+								{edu.location}
+							</p>
+						)}
+						{edu.website?.url && (
 							<a
-								href={edu.url.href}
+								href={edu.website.url}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="inline-block mt-4 text-sm text-accent hover:underline"
 							>
-								{edu.url.label || "View Certificate"} →
+								{edu.website.label || "View Certificate"} →
 							</a>
 						)}
 					</div>

@@ -1,126 +1,148 @@
 export interface ResumeData {
 	id: string;
-	title: string;
+	name: string;
 	slug: string;
+	tags: string[];
 	data: {
+		picture: {
+			hidden: boolean;
+			url: string;
+			size: number;
+			rotation: number;
+			aspectRatio: number;
+			borderRadius: number;
+			borderColor: string;
+			borderWidth: number;
+			shadowColor: string;
+			shadowWidth: number;
+		};
 		basics: {
 			name: string;
 			headline: string;
 			email: string;
 			phone: string;
 			location: string;
-			url: { label: string; href: string };
+			website: { url: string; label: string };
 			customFields: Array<{
 				id: string;
 				icon: string;
-				name: string;
-				value: string;
+				text: string;
 			}>;
-			picture: {
-				url: string;
-				size: number;
-				aspectRatio: number;
-				borderRadius: number;
-				effects: {
-					hidden: boolean;
-					border: boolean;
-					grayscale: boolean;
-				};
-			};
+		};
+		summary: {
+			title: string;
+			columns: number;
+			hidden: boolean;
+			content: string;
 		};
 		sections: {
-			summary: {
-				name: string;
-				visible: boolean;
-				content: string;
-			};
-			awards: {
-				name: string;
-				visible: boolean;
+			profiles: {
+				title: string;
+				columns: number;
+				hidden: boolean;
 				items: Array<{
 					id: string;
-					visible: boolean;
-					title: string;
-					awarder: string;
-					date: string;
-					summary: string;
-					url: { label: string; href: string };
-				}>;
-			};
-			education: {
-				name: string;
-				visible: boolean;
-				items: Array<{
-					id: string;
-					visible: boolean;
-					institution: string;
-					studyType: string;
-					area: string;
-					score: string;
-					date: string;
-					summary: string;
-					url: { label: string; href: string };
+					hidden: boolean;
+					icon: string;
+					network: string;
+					username: string;
+					website: { url: string; label: string };
 				}>;
 			};
 			experience: {
-				name: string;
-				visible: boolean;
+				title: string;
+				columns: number;
+				hidden: boolean;
 				items: Array<{
 					id: string;
-					visible: boolean;
+					hidden: boolean;
 					company: string;
 					position: string;
 					location: string;
-					date: string;
-					summary: string;
-					url: { label: string; href: string };
+					period: string;
+					website: { url: string; label: string };
+					description: string;
+				}>;
+			};
+			education: {
+				title: string;
+				columns: number;
+				hidden: boolean;
+				items: Array<{
+					id: string;
+					hidden: boolean;
+					school: string;
+					degree: string;
+					area: string;
+					grade: string;
+					location: string;
+					period: string;
+					website: { url: string; label: string };
+					description: string;
 				}>;
 			};
 			projects: {
-				name: string;
-				visible: boolean;
+				title: string;
+				columns: number;
+				hidden: boolean;
 				items: Array<{
 					id: string;
-					visible: boolean;
+					hidden: boolean;
 					name: string;
+					period: string;
+					website: { url: string; label: string };
 					description: string;
-					summary: string;
-					url: { label: string; href: string };
-				}>;
-			};
-			languages: {
-				name: string;
-				visible: boolean;
-				items: Array<{
-					id: string;
-					visible: boolean;
-					name: string;
-					description: string;
-					level: number;
-				}>;
-			};
-			references: {
-				name: string;
-				visible: boolean;
-				items: Array<{
-					id: string;
-					visible: boolean;
-					name: string;
-					description: string;
-					summary: string;
-					url: { label: string; href: string };
 				}>;
 			};
 			skills: {
-				name: string;
-				visible: boolean;
+				title: string;
+				columns: number;
+				hidden: boolean;
 				items: Array<{
 					id: string;
-					visible: boolean;
+					hidden: boolean;
+					icon: string;
 					name: string;
-					description: string;
+					proficiency: string;
 					level: number;
 					keywords: string[];
+				}>;
+			};
+			languages: {
+				title: string;
+				columns: number;
+				hidden: boolean;
+				items: Array<{
+					id: string;
+					hidden: boolean;
+					language: string;
+					fluency: string;
+					level: number;
+				}>;
+			};
+			awards: {
+				title: string;
+				columns: number;
+				hidden: boolean;
+				items: Array<{
+					id: string;
+					hidden: boolean;
+					title: string;
+					awarder: string;
+					date: string;
+					website: { url: string; label: string };
+					description: string;
+				}>;
+			};
+			references: {
+				title: string;
+				columns: number;
+				hidden: boolean;
+				items: Array<{
+					id: string;
+					hidden: boolean;
+					name: string;
+					description: string;
 				}>;
 			};
 		};

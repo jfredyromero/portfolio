@@ -7,12 +7,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface AwardItem {
 	id: string;
-	visible: boolean;
+	hidden: boolean;
 	title: string;
 	awarder: string;
 	date: string;
-	summary: string;
-	url: { label: string; href: string };
+	website: { url: string; label: string };
+	description: string;
 }
 
 interface AwardsProps {
@@ -64,7 +64,7 @@ const Awards = ({ items }: AwardsProps) => {
 		return () => ctx.revert();
 	}, [items]);
 
-	const visibleItems = items.filter((item) => item.visible);
+	const visibleItems = items.filter((item) => !item.hidden);
 
 	return (
 		<section
@@ -103,14 +103,15 @@ const Awards = ({ items }: AwardsProps) => {
 								{award.awarder}
 							</p>
 
-							{award.url.href && (
+							{award.website?.url && (
 								<a
-									href={award.url.href}
+									href={award.website.url}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="inline-block mt-4 text-sm text-accent hover:underline"
 								>
-									{award.url.label || "View Certificate"} →
+									{award.website.label || "View Certificate"}{" "}
+									→
 								</a>
 							)}
 						</div>

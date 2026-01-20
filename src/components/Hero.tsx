@@ -6,9 +6,17 @@ interface HeroProps {
 	email: string;
 	location: string;
 	pictureUrl: string;
+	pictureHidden?: boolean;
 }
 
-const Hero = ({ name, headline, email, location, pictureUrl }: HeroProps) => {
+const Hero = ({
+	name,
+	headline,
+	email,
+	location,
+	pictureUrl,
+	pictureHidden,
+}: HeroProps) => {
 	// Split headline into lines for animation
 	const headlineParts = headline.split(" | ");
 
@@ -22,11 +30,13 @@ const Hero = ({ name, headline, email, location, pictureUrl }: HeroProps) => {
 				<div className="relative z-10 max-w-5xl w-full">
 					<div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-8">
 						{/* Profile Image */}
-						<img
-							src={pictureUrl}
-							alt={name}
-							className="w-32 md:w-40 rounded-2xl object-cover animate-scale-in"
-						/>
+						{!pictureHidden && pictureUrl && (
+							<img
+								src={pictureUrl}
+								alt={name}
+								className="w-32 md:w-40 rounded-2xl object-cover animate-scale-in"
+							/>
+						)}
 
 						<div>
 							{/* Name with gradient */}
