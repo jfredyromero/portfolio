@@ -7,8 +7,7 @@ A modern, animated portfolio template that automatically generates from your [Re
 ## ✨ Features
 
 -   **Dynamic Data Loading**: Fetches your CV data directly from rxresu.me API
--   **Light/Dark Mode**: Toggle between themes with smooth transitions
--   **CSS Animations**: Smooth, performant animations using pure CSS (no JavaScript animation libraries)
+-   **Light/Dark Mode**: Toggle between themes with professional transitions
 -   **Responsive Design**: Looks great on mobile, tablet, and desktop
 -   **Section Support**: Experience, Projects, Skills, Education, Awards, Languages, and References
 -   **Easy Deployment**: Deploy to GitHub Pages with zero configuration
@@ -17,7 +16,8 @@ A modern, animated portfolio template that automatically generates from your [Re
 
 ### Prerequisites
 
--   A public CV on [rxresu.me](https://rxresu.me)
+-   A CV on [rxresu.me](https://rxresu.me)
+-   An API key from rxresu.me (Settings → API Keys)
 -   Node.js 18+ installed
 -   A GitHub account
 
@@ -26,20 +26,22 @@ A modern, animated portfolio template that automatically generates from your [Re
 1. Click the **Fork** button at the top right of this repository
 2. This creates a copy in your GitHub account
 
-### Step 2: Get Your Resume URL
+### Step 2: Get Your Resume URL and API Key
 
 1. Go to [rxresu.me](https://rxresu.me) and log in
-2. Open your resume
-3. Click **Share** → **Public Link**
-4. Copy the URL (e.g., `https://rxresu.me/username/my-resume`)
+2. Open your resume and copy the URL (e.g., `https://rxresu.me/username/my-resume`)
+3. Go to **Settings** → **API Keys**
+4. Click **Create New API Key** and copy it
 
-### Step 3: Configure the Environment Variable
+### Step 3: Configure GitHub Secrets
 
 1. In your forked repository, go to **Settings** → **Secrets and variables** → **Actions**
-2. Click **New repository variable**
-3. Add:
-    - **Name**: `VITE_RESUME_URL`
-    - **Value**: Your rxresu.me public URL (e.g., `https://rxresu.me/username/my-resume`)
+2. Click **New repository secret** and add:
+    - **Name**: `PUBLIC_RESUME_PUBLIC_URL`
+    - **Value**: Your rxresu.me URL (e.g., `https://rxresu.me/username/my-resume`)
+3. Click **New repository secret** again and add:
+    - **Name**: `PUBLIC_RXRESUME_API_KEY`
+    - **Value**: Your API key from rxresu.me
 
 ### Step 4: Enable GitHub Pages
 
@@ -71,8 +73,9 @@ cd portfolio
 # Install dependencies
 npm install
 
-# Create a .env file with your resume URL
-echo "VITE_RESUME_URL=https://rxresu.me/your-username/your-resume" > .env
+# Create a .env file with your resume URL and API key
+echo "PUBLIC_RESUME_PUBLIC_URL=https://rxresu.me/your-username/your-resume" > .env
+echo "PUBLIC_RXRESUME_API_KEY=your-api-key-here" >> .env
 
 # Start the development server
 npm run dev
@@ -127,9 +130,25 @@ keyframes: {
 
 ## 🔧 Environment Variables
 
-| Variable          | Description               | Example                        |
-| ----------------- | ------------------------- | ------------------------------ |
-| `VITE_RESUME_URL` | Your public rxresu.me URL | `https://rxresu.me/user/my-cv` |
+| Variable                   | Description               | Required |
+| -------------------------- | ------------------------- | -------- |
+| `PUBLIC_RESUME_PUBLIC_URL` | Your rxresu.me public URL | Yes      |
+| `PUBLIC_RXRESUME_API_KEY`  | Your rxresu.me API key    | Yes      |
+
+## 🌐 How It Works
+
+This portfolio fetches data from the rxresu.me OpenAPI. Since browsers block cross-origin requests (CORS), the app uses a CORS proxy ([corsproxy.io](https://corsproxy.io)) to fetch data from static hosting like GitHub Pages.
+
+**API Flow:**
+
+1. Your public URL is transformed to the API endpoint
+2. The app fetches the data through the CORS proxy
+3. Data is parsed and rendered in the portfolio
+
+## 🔒 Security Note
+
+-   In local development, credentials are stored in `.env` (not committed to git)
+-   In GitHub Pages, credentials are stored as repository secrets
 
 ## 📄 License
 

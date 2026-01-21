@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import type { ResumeData } from "@/types/resume";
 
 // Get resume URL from environment variable or use default
-const PUBLIC_RESUME_PUBLIC_URL =
-	import.meta.env.VITE_RESUME_URL ||
+const RESUME_PUBLIC_URL =
+	import.meta.env.PUBLIC_RESUME_PUBLIC_URL ||
 	"https://rxresu.me/jfredyrom/senior-front-end-engineer-cv";
 
 // Get API key from environment variable
@@ -31,7 +31,7 @@ export const useResumeData = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const apiUrl = getApiUrl(PUBLIC_RESUME_PUBLIC_URL);
+				const apiUrl = getApiUrl(RESUME_PUBLIC_URL);
 				const proxiedUrl = `${CORS_PROXY}${apiUrl}`;
 
 				const response = await fetch(proxiedUrl, {
