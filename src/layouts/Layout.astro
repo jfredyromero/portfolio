@@ -1,5 +1,9 @@
 ---
 import "../styles/global.css";
+const title = "Jhon Romero | Portfolio";
+const description =
+	"Jhon Romero's Portfolio - Senior Front-End Engineer, Software Engineer and Veeva Expert";
+const socialImage = `${Astro.url}/og-image.png`;
 ---
 
 <!doctype html>
@@ -9,7 +13,25 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Jhon Romero | Portfolio</title>
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="author" content="J. Fredy Romero" />
+		<meta
+			name="keywords"
+			content="Frontend, React, Astro, Portfolio, Developer, Web Development"
+		/>
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImage} />
+
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={socialImage} />
 	</head>
 	<body>
 		<slot />
