@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Quote } from "lucide-react";
+import { Phone, User } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +9,9 @@ interface ReferenceItem {
 	id: string;
 	hidden: boolean;
 	name: string;
+	position: string;
+	phone: string;
+	website: { url: string; label: string };
 	description: string;
 }
 
@@ -81,11 +84,27 @@ const References = ({ items }: ReferencesProps) => {
 						key={ref.id}
 						className="ref-item group relative bg-card p-8 rounded-lg border border-border hover:border-accent/50 transition-all duration-300"
 					>
-						<Quote className="w-8 h-8 text-accent/30 absolute top-4 right-4 group-hover:text-accent/50 transition-colors duration-300" />
+						<User className="w-8 h-8 text-accent/30 absolute top-4 right-4 group-hover:text-accent/50 transition-colors duration-300" />
 
 						<h3 className="text-xl font-display-bold text-foreground group-hover:gradient-text transition-all duration-300">
 							{ref.name}
 						</h3>
+
+						{ref.position && (
+							<p className="text-muted-foreground mt-2 text-sm font-medium">
+								{ref.position}
+							</p>
+						)}
+
+						{ref.phone && (
+							<a
+								href={`tel:${ref.phone}`}
+								className="inline-flex items-center gap-2 text-accent hover:text-accent/80 mt-3 text-sm transition-colors duration-200"
+							>
+								<Phone className="w-4 h-4" />
+								{ref.phone}
+							</a>
+						)}
 
 						{ref.description && (
 							<p

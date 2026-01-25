@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AbstractShapes } from "./AbstractShapes";
 
 interface HeroProps {
@@ -17,6 +18,7 @@ const Hero = ({
 	pictureUrl,
 	pictureHidden,
 }: HeroProps) => {
+	const [imageLoaded, setImageLoaded] = useState(false);
 	// Split headline into lines for animation
 	const headlineParts = headline.split(" | ");
 
@@ -31,11 +33,19 @@ const Hero = ({
 					<div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-8">
 						{/* Profile Image */}
 						{!pictureHidden && pictureUrl && (
-							<img
-								src={pictureUrl}
-								alt={name}
-								className="w-32 md:w-40 rounded-2xl object-cover animate-scale-in"
-							/>
+							<div className="relative w-32 md:w-40 aspect-3/4 shrink-0">
+								{!imageLoaded && (
+									<div className="absolute inset-0 rounded-2xl animate-pulse" />
+								)}
+								<img
+									src={pictureUrl}
+									alt={name}
+									onLoad={() => setImageLoaded(true)}
+									className={`w-full h-full rounded-2xl object-cover animate-scale-in ${
+										imageLoaded ? "block" : "hidden"
+									}`}
+								/>
+							</div>
 						)}
 
 						<div>

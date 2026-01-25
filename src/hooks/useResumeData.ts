@@ -12,6 +12,11 @@ const API_KEY = import.meta.env.PUBLIC_RXRESUME_API_KEY || "";
 // CORS proxy to bypass browser restrictions (for static hosting like GitHub Pages)
 const CORS_PROXY = "https://corsproxy.io/?";
 
+// Fallback URL for static JSON data
+const FALLBACK_URL =
+	import.meta.env.PUBLIC_FALLBACK_URL ||
+	"https://raw.githubusercontent.com/jfredyromero/cv-metadata/refs/heads/main/cv-metadata.json";
+
 // Extract API endpoint from public URL
 const getApiUrl = (publicUrl: string): string => {
 	// Transform: https://rxresu.me/username/slug -> https://rxresu.me/api/openapi/resume/username/slug
@@ -23,6 +28,52 @@ const getApiUrl = (publicUrl: string): string => {
 	return publicUrl;
 };
 
+// Fetch from rxresu.me API
+const fetchFromApi = async (): Promise<ResumeData> => {
+	const apiUrl = getApiUrl(RESUME_PUBLIC_URL);
+
+	// Build URL with API key as query param for CORS proxy
+	const urlWithKey = `${apiUrl}?apikey=${encodeURIComponent(API_KEY)}`;
+	const proxiedUrl = `${CORS_PROXY}${encodeURIComponent(urlWithKey)}`;
+
+	// Try direct fetch first (works if CORS is enabled or same-origin)
+	let response: Response;
+	try {
+		response = await fetch(apiUrl, {
+			method: "GET",
+			headers: {
+				"x-api-key": API_KEY,
+			},
+		});
+	} catch {
+		// If direct fetch fails (CORS), use proxy
+		console.log("Direct fetch failed, using CORS proxy...");
+		response = await fetch(proxiedUrl);
+	}
+
+	if (!response.ok) {
+		throw new Error(
+			`Failed to fetch resume data: ${response.status} ${response.statusText}`
+		);
+	}
+
+	return response.json();
+};
+
+// Fetch from fallback GitHub URL
+const fetchFromFallback = async (): Promise<ResumeData> => {
+	console.log("Using fallback URL...");
+	const response = await fetch(FALLBACK_URL);
+
+	if (!response.ok) {
+		throw new Error(
+			`Fallback also failed: ${response.status} ${response.statusText}`
+		);
+	}
+
+	return response.json();
+};
+
 export const useResumeData = () => {
 	const [data, setData] = useState<ResumeData | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -31,22 +82,12 @@ export const useResumeData = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const apiUrl = getApiUrl(RESUME_PUBLIC_URL);
-				const proxiedUrl = `${CORS_PROXY}${apiUrl}`;
-
-				const response = await fetch(proxiedUrl, {
-					method: "GET",
-					headers: {
-						"x-api-key": API_KEY,
-					},
+				// Try API first, fallback to static JSON if it fails
+				const json = await fetchFromApi().catch(async (apiError) => {
+					console.warn("API fetch failed:", apiError.message);
+					return fetchFromFallback();
 				});
 
-				if (!response.ok) {
-					throw new Error(
-						`Failed to fetch resume data: ${response.status} ${response.statusText}`
-					);
-				}
-				const json = await response.json();
 				setData(json);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : "Unknown error");

@@ -3,14 +3,8 @@ interface FooterProps {
 	email: string;
 	customFields: Array<{
 		id: string;
-		hidden: boolean;
 		icon: string;
-		network: string;
-		username: string;
-		website: {
-			label: string;
-			url: string;
-		};
+		text: string;
 	}>;
 }
 
@@ -27,8 +21,6 @@ const Footer = ({ name, email, customFields }: FooterProps) => {
 		if (icon.includes("github")) return "GitHub";
 		return icon;
 	};
-
-	const visibleFields = customFields.filter((field) => !field.hidden);
 
 	return (
 		<footer
@@ -54,10 +46,10 @@ const Footer = ({ name, email, customFields }: FooterProps) => {
 					</div>
 
 					<div className="flex gap-8">
-						{visibleFields.map((field) => (
+						{customFields.map((field) => (
 							<a
 								key={field.id}
-								href={field.website.url}
+								href={field.text}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-muted-foreground hover:text-foreground transition-colors duration-300"

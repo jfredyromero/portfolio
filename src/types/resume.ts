@@ -1,3 +1,4 @@
+// Types based on rxresu.me OpenAPI response structure
 export interface ResumeData {
 	id: string;
 	name: string;
@@ -142,6 +143,9 @@ export interface ResumeData {
 					id: string;
 					hidden: boolean;
 					name: string;
+					position: string;
+					phone: string;
+					website: { url: string; label: string };
 					description: string;
 				}>;
 			};
